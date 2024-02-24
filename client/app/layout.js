@@ -4,6 +4,7 @@ import NavAside from "@/components/NavAside";
 import NavTop from "@/components/NavTop";
 import Settings from "@/components/Settings";
 import Duabarc from "@/components/duabar/Duabar";
+import Allduas from "@/components/allduas/Allduas";
 // import Allduas from "@/components/allduas/Allduas";
 
 const inter = Inter({ subsets: ["latin"] });
@@ -25,6 +26,7 @@ export default function RootLayout({ children }) {
             <div className="flex justify-between">
               {" "}
               <Duabarc />
+              <Allduas />
               {children}
               <Settings />
             </div>

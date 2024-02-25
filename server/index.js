@@ -31,7 +31,7 @@ app.get("/api/sub_category", (req, res) => {
 });
 
 // Get all duas
-app.get("https://dua-project-api.vercel.app/dua", (req, res) => {
+app.get("/api/dua", (req, res) => {
   db.all("SELECT * FROM dua", (err, rows) => {
     if (err) {
       res.status(500).json({ error: err.message });

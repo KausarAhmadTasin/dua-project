@@ -19,7 +19,7 @@ const Allduas = async ({ duas, filteredDuas }) => {
       <ul className="">
         {allDuas.map((dua) => (
           <li className="mb-4 bg-white p-5 rounded-2xl mr-0 width" key={dua.id}>
-            <div className="flex text-green-500 font-semibold items-center gap-3">
+            <div className="flex text-green-500 font-semibold text-lg items-center gap-3">
               {" "}
               <CiCircleCheck className="font-bold text-2xl" />
               <p>

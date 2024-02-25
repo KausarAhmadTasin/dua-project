@@ -16,3 +16,7 @@ body {
     text-wrap: balance;
   }
 }
+
+.width {
+  width: 38vw;
+}

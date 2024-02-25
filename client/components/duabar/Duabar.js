@@ -5,12 +5,16 @@ import fetchSubCategories from "@/lib/fetchSubCategory";
 import { TbPointFilled } from "react-icons/tb";
 import React, { useState, useEffect } from "react";
 import Image from "next/image";
+import fetchSubCategoryData from "@/lib/fetchSubCategoryData";
+import fetchCategoryData from "@/lib/fetchCategoyData";
 
-export default function Duabarc() {
+export default function Duabar({ getfilteredDuas }) {
   const [categories, setCategories] = useState([]);
   const [subCategories, setSubCategories] = useState([]);
   const [duas, setDuas] = useState([]);
   const [openCategory, setOpenCategory] = useState(null);
+  const [selectedSubCategory, setSelectedSubCategory] = useState(null);
+  const [subCategoryData, setSubCategoryData] = useState(null);
 
   useEffect(() => {
     async function fetchData() {
@@ -26,7 +30,7 @@ export default function Duabarc() {
     fetchData();
   }, []);
 
-  const handleCategoryClick = (categoryId) => {
+  const handleCategoryClick = async (categoryId) => {
     if (openCategory === categoryId) {
       setOpenCategory(null);
     } else {
@@ -38,6 +42,12 @@ export default function Duabarc() {
     return openCategory === categoryId;
   };
 
+  const handleSubCategoryClick = async (subCategoryId) => {
+    setSelectedSubCategory(subCategoryId);
+    const data = await fetchSubCategoryData(subCategoryId);
+    setSubCategoryData(data);
+  };
+
   return (
     <div className="bg-white w-80 ml-6 pt-0 rounded-2xl overflow-auto h-[88vh]">
       <p className="bg-green-500 text-white text-center font-semibold p-3 text-m rounded-t-lg sticky top-0 w-76">
@@ -47,7 +57,10 @@ export default function Duabarc() {
         {categories.map((category) => (
           <div className="mb-4" key={category.id}>
             <div
-              onClick={() => handleCategoryClick(category.id)}
+              onClick={() => {
+                handleCategoryClick(category.id);
+                getfilteredDuas(category.id);
+              }}
               className="flex items-center gap-2 p-3 bg-gray-100 rounded-2xl mb-2 cursor-pointer"
             >
               <Image
@@ -77,7 +90,11 @@ export default function Duabarc() {
                 {subCategories
                   .filter((subCategory) => subCategory.cat_id === category.id)
                   .map((subCategory) => (
-                    <div className="flex" key={subCategory.id}>
+                    <div
+                      className="flex cursor-pointer"
+                      key={subCategory.id}
+                      onClick={() => handleSubCategoryClick(subCategory.id)}
+                    >
                       <div className="font-sm mt-1 text-green-500">
                         <TbPointFilled />
                       </div>

@@ -1,29 +1,41 @@
+"use client";
 import fetchCategories from "@/lib/fetchCategory";
 import fetchDua from "@/lib/fetchDua";
 import fetchSubCategories from "@/lib/fetchSubCategory";
 import { TbPointFilled } from "react-icons/tb";
-import React from "react";
+import React, { useState, useEffect } from "react";
 import Image from "next/image";
 
-export default async function Duabarc() {
-  const categories = await fetchCategories();
-  const subCategories = await fetchSubCategories();
-  const duas = await fetchDua();
-  console.log(subCategories);
-  console.log(categories);
+export default function Duabarc() {
+  const [categories, setCategories] = useState([]);
+  const [subCategories, setSubCategories] = useState([]);
+  const [duas, setDuas] = useState([]);
+  const [openCategory, setOpenCategory] = useState(null);
 
-  const handleCategory = (categoryId) => {
-    const filteredSubCategories = subCategories.filter(
-      (subCategory) => subCategory.cat_id === categoryId
-    );
-    return filteredSubCategories;
+  useEffect(() => {
+    async function fetchData() {
+      const fetchedCategories = await fetchCategories();
+      const fetchedSubCategories = await fetchSubCategories();
+      const fetchedDuas = await fetchDua();
+
+      setCategories(fetchedCategories);
+      setSubCategories(fetchedSubCategories);
+      setDuas(fetchedDuas);
+    }
+
+    fetchData();
+  }, []);
+
+  const handleCategoryClick = (categoryId) => {
+    if (openCategory === categoryId) {
+      setOpenCategory(null);
+    } else {
+      setOpenCategory(categoryId);
+    }
   };
-  const handleSubCategory = (subCategoryId) => {
-    const filteredDuaNames = duas.filter((dua) => {
-      dua.subcat_id === subCategoryId;
-      console.log(dua);
-    });
-    return filteredDuaNames;
+
+  const isCategoryOpen = (categoryId) => {
+    return openCategory === categoryId;
   };
 
   return (
@@ -32,10 +44,12 @@ export default async function Duabarc() {
         Categories
       </p>
       <div className="p-3 ">
-        {" "}
         {categories.map((category) => (
           <div className="mb-4" key={category.id}>
-            <div className="flex items-center gap-2 p-3 bg-gray-100 rounded-2xl mb-2 ">
+            <div
+              onClick={() => handleCategoryClick(category.id)}
+              className="flex items-center gap-2 p-3 bg-gray-100 rounded-2xl mb-2 cursor-pointer"
+            >
               <Image
                 src={`https://i.ibb.co/Km5k3WD/4b123749b99b0322305c72c5d565ddf3.png`}
                 alt=""
@@ -58,16 +72,20 @@ export default async function Duabarc() {
                 <p className="text-sm text-gray-500">Duas</p>
               </div>
             </div>
-            <ul>
-              {handleCategory(category.id).map((subCategory) => (
-                <div className="flex">
-                  <div className="font-sm mt-1 text-green-500">
-                    <TbPointFilled />
-                  </div>
-                  <li key={subCategory.id}> {subCategory.subcat_name_en}</li>
-                </div>
-              ))}
-            </ul>
+            {isCategoryOpen(category.id) && (
+              <ul>
+                {subCategories
+                  .filter((subCategory) => subCategory.cat_id === category.id)
+                  .map((subCategory) => (
+                    <div className="flex" key={subCategory.id}>
+                      <div className="font-sm mt-1 text-green-500">
+                        <TbPointFilled />
+                      </div>
+                      <li> {subCategory.subcat_name_en}</li>
+                    </div>
+                  ))}
+              </ul>
+            )}
           </div>
         ))}
       </div>

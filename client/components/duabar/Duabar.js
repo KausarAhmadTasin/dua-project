@@ -49,7 +49,7 @@ export default function Duabar({ getfilteredDuas }) {
   };
 
   return (
-    <div className="bg-white w-80 ml-6 pt-0 rounded-2xl overflow-auto h-[88vh]">
+    <div className="bg-white w-80 ml-6 pt-0 rounded-2xl overflow-auto h-[86vh]">
       <p className="bg-green-500 text-white text-center font-semibold p-3 text-m rounded-t-lg sticky top-0 w-76">
         Categories
       </p>

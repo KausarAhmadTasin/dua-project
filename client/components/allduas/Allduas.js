@@ -2,7 +2,6 @@ import { IoBulbOutline, IoShareSocialOutline } from "react-icons/io5";
 import { LuBookmark, LuCopy } from "react-icons/lu";
 import { BsExclamationOctagon } from "react-icons/bs";
 import { CiCircleCheck } from "react-icons/ci";
-import Image from "next/image";
 
 const Allduas = async ({ duas, filteredDuas }) => {
   let allDuas = [];
@@ -10,7 +9,6 @@ const Allduas = async ({ duas, filteredDuas }) => {
   if (filteredDuas.length > 0) {
     allDuas = filteredDuas;
   } else {
-    // Handle case when filteredDuas is empty, show allDuas
     allDuas = await duas.props.duas;
   }
   console.log(allDuas);

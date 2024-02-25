@@ -6,7 +6,6 @@ import { TbPointFilled } from "react-icons/tb";
 import React, { useState, useEffect } from "react";
 import Image from "next/image";
 import fetchSubCategoryData from "@/lib/fetchSubCategoryData";
-import fetchCategoryData from "@/lib/fetchCategoyData";
 
 export default function Duabar({ getfilteredDuas }) {
   const [categories, setCategories] = useState([]);

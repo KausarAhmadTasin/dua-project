@@ -2,9 +2,10 @@
 import Allduas from "@/components/allduas/Allduas";
 import Duabar from "@/components/duabar/Duabar";
 import getDuas from "@/lib/fetchDua";
+import { useState } from "react";
 
 export default async function Home() {
-  let filteredDuas = [];
+  const [filteredDuas, setFilteredDuas] = useState([]);
   const duas = await getDuas();
   // console.log(duas);
 
@@ -12,7 +13,8 @@ export default async function Home() {
     filteredDuas.length = 0;
     const duaFilter = duas.props.duas.filter((dua) => dua.cat_id === cat_id);
     // filteredDuas.push(duaFilter);
-    console.log(filteredDuas);
+    // setFilteredDuas(duaFilter);
+    // console.log(duaFilter);
   };
   return (
     <>
